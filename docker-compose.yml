@@ -1,0 +1,74 @@
+services:
+  zerto-siem-bridge:
+    build: .
+    image: zerto-siem-bridge:latest
+    container_name: zerto-siem-bridge
+    restart: unless-stopped
+
+    ports:
+      - "514:514/udp"
+      - "514:514/tcp"
+      - "6514:6514/tcp"
+      - "24231:24231/tcp"    # Prometheus metrics
+
+    volumes:
+      - ./certs:/etc/fluent/certs:ro   # mount pre-generated certs, or let entrypoint generate
+      - fluentd-buffer:/var/log/fluentd/buffer
+      - fluentd-logs:/var/log/fluentd
+
+    environment:
+      # --- TLS ---
+      TLS_ENABLED: "${TLS_ENABLED:-true}"
+      TLS_CERT_PATH: "/etc/fluent/certs/server.crt"
+      TLS_KEY_PATH: "/etc/fluent/certs/server.key"
+      TLS_CA_PATH: "/etc/fluent/certs/ca.crt"
+      # Set to a strong passphrase; used only if TLS_ENABLED=true
+      FLUENTD_TLS_KEY_PASSPHRASE: "${FLUENTD_TLS_KEY_PASSPHRASE}"
+
+      # --- SIEM toggles (set to "true" to enable each output) ---
+      SIEM_ELASTIC_ENABLED: "${SIEM_ELASTIC_ENABLED:-false}"
+      SIEM_SPLUNK_ENABLED: "${SIEM_SPLUNK_ENABLED:-false}"
+      SIEM_SENTINEL_ENABLED: "${SIEM_SENTINEL_ENABLED:-false}"
+      SIEM_SENTINELONE_ENABLED: "${SIEM_SENTINELONE_ENABLED:-false}"
+
+      # --- Elastic ---
+      ELASTIC_HOST: "${ELASTIC_HOST:-}"
+      ELASTIC_PORT: "${ELASTIC_PORT:-9200}"
+      ELASTIC_SCHEME: "${ELASTIC_SCHEME:-https}"
+      ELASTIC_INDEX: "${ELASTIC_INDEX:-zerto-siem-bridge}"
+      ELASTIC_USER: "${ELASTIC_USER:-}"
+      ELASTIC_PASSWORD: "${ELASTIC_PASSWORD:-}"
+      ELASTIC_API_KEY: "${ELASTIC_API_KEY:-}"
+
+      # --- Splunk HEC ---
+      SPLUNK_HEC_URL: "${SPLUNK_HEC_URL:-}"
+      SPLUNK_HEC_TOKEN: "${SPLUNK_HEC_TOKEN:-}"
+      SPLUNK_INDEX: "${SPLUNK_INDEX:-zerto}"
+      SPLUNK_SOURCE: "${SPLUNK_SOURCE:-zerto:syslog}"
+      SPLUNK_SOURCETYPE: "${SPLUNK_SOURCETYPE:-zerto:event}"
+
+      # --- Microsoft Sentinel (Log Analytics) ---
+      SENTINEL_WORKSPACE_ID: "${SENTINEL_WORKSPACE_ID:-}"
+      SENTINEL_WORKSPACE_KEY: "${SENTINEL_WORKSPACE_KEY:-}"
+      SENTINEL_LOG_TYPE: "${SENTINEL_LOG_TYPE:-ZertoEvents}"
+
+      # --- SentinelOne (HTTP ingest) ---
+      S1_INGEST_URL: "${S1_INGEST_URL:-}"
+      S1_API_TOKEN: "${S1_API_TOKEN:-}"
+
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "6514"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+volumes:
+  fluentd-buffer:
+  fluentd-logs:

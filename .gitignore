@@ -1,0 +1,7 @@
+.env
+certs/server.key
+certs/server.crt
+certs/ca.crt
+certs/.passphrase
+certs/server.csr
+certs/csr.conf

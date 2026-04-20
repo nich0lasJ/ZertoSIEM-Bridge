@@ -1,0 +1,26 @@
+# Zerto CEF syslog test fixtures
+# Send these to port 514 with: nc -u localhost 514 < fixtures/zerto_sample.log
+
+# VPG RPO violation (severity 8 = critical)
+<134>Apr 20 2026 10:15:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|VPG_RPO_VIOLATION|VPG RPO Violation|8|vpgName=Production-VPG vmName=WebServer01 siteName=Site-A rpoInSeconds=450 rpoThreshold=60 msg=VPG Production-VPG RPO exceeded threshold
+
+# VPG created (severity 3 = informational)
+<134>Apr 20 2026 10:20:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|VPG_CREATED|VPG Created|3|vpgName=DR-VPG siteName=Site-A msg=VPG DR-VPG was created
+
+# Failover started (severity 6 = warning)
+<134>Apr 20 2026 11:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|FAILOVER_STARTED|Failover Started|6|vpgName=Production-VPG recoveryType=Failover siteName=Site-B msg=Failover initiated for VPG Production-VPG
+
+# User login failed (severity 7 = high)
+<134>Apr 20 2026 11:05:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|USER_LOGIN_FAILED|User Login Failed|7|suser=admin src=192.168.1.100 msg=Login attempt failed for user admin from 192.168.1.100
+
+# User login success (severity 3)
+<134>Apr 20 2026 11:06:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|USER_LOGIN|User Login|3|suser=operator src=192.168.1.50 msg=User operator logged in from 192.168.1.50
+
+# Journal hard limit reached (severity 8)
+<134>Apr 20 2026 12:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|JOURNAL_HARD_LIMIT_REACHED|Journal Hard Limit Reached|8|vpgName=Production-VPG vmName=DBServer01 journalUsedStorageGb=512 journalHardLimitGb=512 msg=Journal hard limit reached for VM DBServer01
+
+# Site disconnected (severity 7)
+<134>Apr 20 2026 12:30:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|SITE_DISCONNECTED|Site Disconnected|7|siteName=Site-B msg=Connectivity to recovery site Site-B lost
+
+# Config change (severity 3)
+<134>Apr 20 2026 13:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|CONFIG_CHANGED|Configuration Changed|3|suser=admin entityType=VPG entityName=DR-VPG msg=VPG settings modified by admin
