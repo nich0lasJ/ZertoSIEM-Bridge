@@ -6,8 +6,6 @@
 
 A FluentD-based Docker container that ingests Zerto ZVM syslog events (CEF format), normalises them to [Elastic Common Schema (ECS)](https://www.elastic.co/guide/en/ecs/current/index.html), and forwards them to one or more SIEM platforms.
 
-Inspired by [HPEAlletraStorageMP-SyslogAggregator](https://github.com/HewlettPackard/HPEAlletraStorageMP-SyslogAggregator) -- same FluentD + ECS approach, extended with multi-SIEM push delivery and Docker deployment.
-
 ---
 
 ## Architecture
@@ -264,3 +262,20 @@ Key metrics to watch:
 ## License
 
 Apache License 2.0 -- see [LICENSE](LICENSE)
+
+---
+
+## Legal Disclaimer
+
+This project is open-source and is not supported under any Hewlett Packard
+Enterprise support program or service. The author and Hewlett Packard Enterprise
+disclaim all implied warranties including, without limitation, any implied
+warranties of merchantability or fitness for a particular purpose.
+
+In no event shall Hewlett Packard Enterprise, its authors, or anyone else
+involved in the creation, production, or delivery of this project be liable
+for any damages whatsoever (including, without limitation, damages for loss
+of business profits, business interruption, loss of business information, or
+other pecuniary loss) arising out of the use of or inability to use this
+project, even if advised of the possibility of such damages. The entire risk
+arising out of the use or performance of this project remains with you.
