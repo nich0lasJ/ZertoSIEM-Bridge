@@ -5,3 +5,5 @@ certs/ca.crt
 certs/.passphrase
 certs/server.csr
 certs/csr.conf
+*.tar.gz
+ar

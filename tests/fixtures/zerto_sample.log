@@ -24,3 +24,24 @@
 
 # Config change (severity 3)
 <134>Apr 20 2026 13:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|CONFIG_CHANGED|Configuration Changed|3|suser=admin entityType=VPG entityName=DR-VPG msg=VPG settings modified by admin
+
+# VRA installed (severity 3)
+<134>Apr 20 2026 13:15:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|VRA_INSTALLED|VRA Installed|3|siteName=Site-A vmName=VRA-01 msg=VRA installed on host esxi-01.local
+
+# Restore completed (severity 3)
+<134>Apr 20 2026 13:30:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|RESTORE_COMPLETED|Restore Completed|3|vpgName=Production-VPG vmName=WebServer01 recoveryType=Restore msg=Restore completed for VM WebServer01
+
+# Replication paused (severity 5)
+<134>Apr 20 2026 14:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|REPLICATION_PAUSED|Replication Paused|5|vpgName=DR-VPG siteName=Site-A msg=Replication paused for VPG DR-VPG
+
+# LTR backup completed (severity 3)
+<134>Apr 20 2026 14:30:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|LTR_BACKUP_COMPLETED|LTR Backup Completed|3|vpgName=Production-VPG siteName=Site-A msg=Long-term retention backup completed
+
+# Task failed (severity 7)
+<134>Apr 20 2026 15:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|TASK_FAILED|Task Failed|7|entityType=VPG entityName=DR-VPG msg=Task Install VRA failed with error timeout
+
+# Alert raised (severity 6)
+<134>Apr 20 2026 15:30:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|ALERT_RAISED|Alert Raised|6|alertType=VPG entityType=VPG entityName=Production-VPG msg=VPG not meeting SLA
+
+# Encryption detection alert — ENC0001 (severity 4 = warning per Zerto docs)
+<134>Apr 20 2026 16:00:00 ZVM-PROD01 CEF:0|Zerto|ZVM|9.5|ENC0001|Encryption Detection|4|vpgName=Production-VPG vmName=FileServer01,AppServer02 siteName=Site-A alertType=EncryptionDetection volumes=C:,D:,E: msg=Abnormal encryption behavior was detected. We have detected an abnormal encryption behavior around VPG: Production-VPG. This affects the following virtual machines: FileServer01, AppServer02 and the following volumes: C:, D:, E:.
